@@ -204,18 +204,20 @@ font-size: var(--sm);
 color: var(--hospital-green) !important;
 }
 
-/* Carrito Compras productos */
+/* Aside  Carrito Compras y product detalle  */
 aside {
+  background-color: var(--white);
   width: 360px;
-  padding: 0 24px;
   box-sizing: border-box;
   position: absolute;
   right: 0;  
 }
 
+
+/* Shopping Cart  */
+
 #shoppingCartContainer {
-  background-color:  #F7F7F7;
-  border-radius: 10px;
+  padding: 0 24px;
 }
 
 .title-container {
@@ -303,40 +305,36 @@ aside {
   border-radius: 20px;
   object-fit: cover;
 }
-.product-info {
+.product-card .product-info {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-top: 12px;
+  margin: 10px 10px 0 10px;
 }
-.product-info figure {
+.product-card .product-info figure {
   margin: 0;
 }
-.product-info figure img {
+.product-card .product-info figure img {
   width: 35px;
   height: 35px;
 }
-.product-info div p:nth-child(1) {
+.product-card .product-info div p:nth-child(1) {
   font-weight: bold;
   font-size: var(--md);
   margin-top: 0;
   margin-bottom: 4px;
 }
-.product-info div p:nth-child(2) {
+.product-card .product-info div p:nth-child(2) {
   font-size: var(--sm);
   margin-top: 0;
   margin-bottom: 0;
   color: var(--very-light-pink);
 }
 
-/* Detalles Productos */
-aside {
-  width: 360px;
-  padding-bottom: 24px;
-  position: absolute;
-  right: 0;
-}
-aside-close {
+/* Detalle Producto */
+
+.detallesProduct-close {
   background: var(--white);
   width: 14px;
   height: 14px;
@@ -347,31 +345,33 @@ aside-close {
   padding: 12px;
   border-radius: 50%;
 }
-aside-close:hover {
+#detallesProduct-close:hover {
   cursor: pointer;
 }
-aside > img:nth-child(2) {
+#detallesProduct > img:nth-child(2) {
   width: 100%;
   height: 360px;
   object-fit: cover;
   border-radius: 0 0 20px 20px;
 }
-.product-info {
+
+#detallesProduct .product-info {
   margin: 24px 24px 0 24px;
 }
-.product-info p:nth-child(1) {
+
+#detallesProduct .product-info p:nth-child(1) {
   font-weight: bold;
   font-size: var(--md);
   margin-top: 0;
   margin-bottom: 4px;
 }
-.product-info p:nth-child(2) {
+#detallesProduct .product-info p:nth-child(2) {
   color: var(--very-light-pink);
   font-size: var(--md);
   margin-top: 0;
   margin-bottom: 36px;
 }
-.product-info p:nth-child(3) {
+#detallesProduct .product-info p:nth-child(3) {
   color: var(--very-light-pink);
   font-size: var(--sm);
   margin-top: 0;
