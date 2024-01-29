@@ -1,3 +1,7 @@
+const API = 'https://api.escuelajs.co/api/v1';
+function fetchData(url) { return fetch(url);}
+let shoppingCart = {};
+
 const menuEmail = document.querySelector('.navbar-email');
 const desktopMenuEmail = document.querySelector('.desktop-menu');
 const menuHamIcon = document.querySelector('.menu');
@@ -7,11 +11,15 @@ const shoppingCartContainer = document.querySelector('#shoppingCartContainer');
 const cardsContainer = document.querySelector('.cards-container');
 const productDetailContainer = document.querySelector('#detallesProduct');
 const productDetailCloseIcon = document.querySelector('.detallesProduct-close');
+let btnAddShopping = document.querySelector('.add-to-cart-button');
+let imgProduct = document.getElementById('description-product-img');
+
 
 menuEmail.addEventListener('click', toggleMenuEmail);
 menuHamIcon.addEventListener('click', toggleMenuMobil);
 menuCarritoIcon.addEventListener('click', toggleListCarrito);
 productDetailCloseIcon.addEventListener('click', closeProductDetailAside);
+btnAddShopping.addEventListener('click', e => getItemsAside(e)); //comprar item desde aside
 
 function toggleMenuEmail(){
     const isListCarritoClosed = shoppingCartContainer.classList.contains('inactive');
@@ -28,7 +36,8 @@ function toggleMenuMobil(){
     if (!isListCarritoClosed){
         shoppingCartContainer.classList.add('inactive');
     }
-    
+
+    closeProductDetailAside();
     mobileMenu.classList.toggle('inactive');
 }
 
@@ -51,161 +60,71 @@ function toggleListCarrito(){
     shoppingCartContainer.classList.toggle('inactive');
 }
 
-const productList = [];
-productList.push({
-    name: "Computer",
-    img: "https://images.pexels.com/photos/930530/pexels-photo-930530.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    price: 750,
-})
-productList.push({
-    name: "Headphones",
-    img: "https://images.pexels.com/photos/610945/pexels-photo-610945.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    price: 150,
-})
-productList.push({
-    name: "Phone",
-    img: "https://images.pexels.com/photos/4195325/pexels-photo-4195325.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    price: 500,
-})
-productList.push({
-    name: "Watch",
-    img: "https://images.pexels.com/photos/2078268/pexels-photo-2078268.jpeg",
-    price: 150,
-})
-productList.push({
-    name: "Production Kit",
-    img: "https://images.pexels.com/photos/1447264/pexels-photo-1447264.jpeg",
-    price: 850,
-})
-productList.push({
-    name: "Setup",
-    img: "https://images.pexels.com/photos/4930018/pexels-photo-4930018.jpeg",
-    price: 1380,
-})
-productList.push({
-    name: "Microphone",
-    img: "https://images.pexels.com/photos/3962990/pexels-photo-3962990.jpeg",
-    price: 180,
-})
-productList.push({
-    name: "Citizen Watch",
-    img: "https://images.pexels.com/photos/592815/pexels-photo-592815.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    price: 450,
-})
-productList.push({
-    name: "Cap",
-    img: "https://images.pexels.com/photos/1878821/pexels-photo-1878821.jpeg",
-    price: 99,
-})
-productList.push({
-    name: "Tablet",
-    img: "https://images.pexels.com/photos/2647376/pexels-photo-2647376.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    price: 390,
-})
-productList.push({
-    name: "Agenda",
-    img: "https://images.pexels.com/photos/163187/coffee-tablet-headphones-work-163187.jpeg",
-    price: 30,
-})
-productList.push({
-    name: "Notes book",
-    img: "https://images.pexels.com/photos/5712452/pexels-photo-5712452.jpeg",
-    price: 25,
-})
-productList.push({
-    name: "Book kit",
-    img: "https://images.pexels.com/photos/4153146/pexels-photo-4153146.jpeg",
-    price: 120,
-})
-productList.push({
-    name: "Glasses",
-    img: "https://images.pexels.com/photos/39716/pexels-photo-39716.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    price: 110,
-})
-productList.push({
-    name: "Wallet",
-    img: "https://images.pexels.com/photos/12495665/pexels-photo-12495665.jpeg",
-    price: 85,
-})
-
-function detallesDivProductos(arrayProduct){
-    for (product of arrayProduct){
-        const productCard = document.createElement('div');
-        productCard.classList.add('product-card')
-
-        const productImg = document.createElement('img');
-        productImg.setAttribute('src', product.img);
-        productImg.addEventListener('click', openProductDetailAside)
-
-        const productInfo = document.createElement('div');
-        productInfo.classList.add('product-info');
-
-        const productInfoDiv = document.createElement('div');
-
-        const productPrice = document.createElement('p');
-        productPrice.innerText = '$'+ product.price;
-        const productName = document.createElement('p');
-        productName.innerText = product.name;
-
-        productInfoDiv.appendChild(productPrice);
-        productInfoDiv.appendChild(productName);
-
-        const productInfoFigure = document.createElement('figure');
-        const productImgCart = document.createElement('img');
-        productImgCart.setAttribute('src', 'icons/bt_add_to_cart.svg');
-
-        productInfoFigure.appendChild(productImgCart);
-
-        productInfo.appendChild(productInfoDiv);
-        productInfo.appendChild(productInfoFigure);
-        
-        productCard.appendChild(productImg);
-        productCard.appendChild(productInfo);
-
-        cardsContainer.appendChild(productCard);
-    }
-}
-detallesDivProductos(productList);
-
-function openProductDetailAside(){
-    productDetailContainer.classList.remove('inactive');
-}
-function closeProductDetailAside(){
-    productDetailContainer.classList.add('inactive');
-}
-
-
-/* Utlizando la API de platzi
-let container = document.querySelector('.cards-container');
-const API = 'https://api.escuelajs.co/api/v1';
-
-function fetchData(url) {
-    return fetch(url);
-}
-
+// VER PRODUCTOS DE API
 fetchData(`${API}/products`)
     .then(response => response.json())
     .then(productos => {
         const fragment = document.createDocumentFragment();
-        let card = '';
-        for (let i = 0; i < 150; i++) {
-            card += `<div class="product-card">
-            <img src="${productos[i].images[0]}" alt="">
-                <div class="product-info">
-                        <div>
-                            <p>$ ${productos[i].price}</p>
-                            <p>${productos[i].title}</p>
-                        </div>
-                    <figure>
-                        <img src="../icons/bt_add_to_cart.svg" alt="">
-                    </figure>
-                </div>
-            </div>`
-        }
-        fragment.append(card);
-        container.innerHTML = fragment.textContent
-    })
-    .catch(error => console.error(error))
-    .finally(() => console.log('Finalizado'))
+        for (let i = 0; i < 20; i++) {
+            const productCard = document.createElement('div');
+            productCard.classList.add('product-card');
+            productCard.setAttribute('id', productos[i].id);
 
-    */
+            const imgCard = document.createElement('img'); //CREANDO ETIQUETA IMG
+            imgCard.setAttribute('src', productos[i].images[0]); //AGREGANDO EL SOURCE
+
+            const productInfo = document.createElement('div'); //CREANDO ETIQUETA DIV
+            productInfo.classList.add('product-info'); //AGREGAR UNA CLASE AL DIV
+
+            productCard.append(imgCard, productInfo); // INSERTANDO EN DIV PADRE LOS ELEMENTOS QUE LLEVARA DENTRO DE EL
+
+            const divText = document.createElement('div');
+            productInfo.append(divText);
+
+            const precio = document.createElement('p');
+            precio.textContent = productos[i].price; //AGREGANDO CONTENIDO DENTRO DE LA ETIQUETA
+
+            const nombre = document.createElement('p');
+            nombre.textContent = productos[i].title;  //AGREGANDO CONTENIDO DENTRO DE LA ETIQUETA
+
+            divText.append(precio, nombre);
+
+            const figure = document.createElement('figure');
+            const icon = document.createElement('img');
+            icon.setAttribute('src', './icons/bt_add_to_cart.svg');
+            icon.setAttribute('value', productos[i].id);
+
+            // HACER CLICK EN UNA IMG DE CARDS
+            imgCard.addEventListener('click', e => {openProductDetailAside(e, productInfo, productCard, productos);});
+
+            figure.append(icon);
+            productInfo.append(figure);
+
+            fragment.append(productCard);
+            icon.addEventListener('click', e => agregarCompra(e));
+        }
+
+        cardsContainer.append(fragment); //AGREGANDO TODOS LOS CARDS DENTRO DE UN CONTENEDOR
+
+    })
+    .catch(error => console.error(error)) // EN CASO DE ALGUN ERROR
+    .finally(() => console.log('Finalizado')) //AL FINALIZAR SIN IMPORTAR SI HAY O NO ERROR
+
+
+function openProductDetailAside(e, productInfo, productCard, productos){
+    shoppingCartContainer.classList.add('inactive');
+    productDetailContainer.classList.remove('inactive');
+    
+    // COPIAR IMG DE CARD EN ASIDE
+    imgProduct.setAttribute('src', e.target.src);
+
+    // COPIAR LOS ELEMENTOS DE UN CARD AL ASIDE
+    productDetailContainer.children[2].children[0].textContent = productInfo.children[0].children[0].textContent;
+    productDetailContainer.children[2].children[1].textContent = productInfo.children[0].children[1].textContent;
+    productDetailContainer.children[2].children[2].textContent = productos[productCard.getAttribute('id')].description;//traer la descripcion del producto
+    productDetailContainer.children[2].children[3].setAttribute('value', productos[productCard.getAttribute('id')].id);//colocar id en el boton de compra del aside
+
+}
+function closeProductDetailAside(){
+    productDetailContainer.classList.add('inactive');
+}
