@@ -5,10 +5,13 @@ const mobileMenu = document.querySelector('.mobile-menu');
 const menuCarritoIcon = document.querySelector('.navbar-shopping-cart');
 const shoppingCartContainer = document.querySelector('#shoppingCartContainer');
 const cardsContainer = document.querySelector('.cards-container');
+const productDetailContainer = document.querySelector('#detallesProduct');
+const productDetailCloseIcon = document.querySelector('.detallesProduct-close');
 
 menuEmail.addEventListener('click', toggleMenuEmail);
 menuHamIcon.addEventListener('click', toggleMenuMobil);
 menuCarritoIcon.addEventListener('click', toggleListCarrito);
+productDetailCloseIcon.addEventListener('click', closeProductDetailAside);
 
 function toggleMenuEmail(){
     const isListCarritoClosed = shoppingCartContainer.classList.contains('inactive');
@@ -25,6 +28,7 @@ function toggleMenuMobil(){
     if (!isListCarritoClosed){
         shoppingCartContainer.classList.add('inactive');
     }
+    
     mobileMenu.classList.toggle('inactive');
 }
 
@@ -37,6 +41,13 @@ function toggleListCarrito(){
     if (!isEmailMenuClosed){
         desktopMenuEmail.classList.add('inactive');
     }
+
+    const isProductDetailClosed = productDetailContainer.classList.contains('inactive');
+
+    if (!isProductDetailClosed){
+        productDetailContainer.classList.add('inactive');
+    }
+
     shoppingCartContainer.classList.toggle('inactive');
 }
 
@@ -124,6 +135,7 @@ function detallesDivProductos(arrayProduct){
 
         const productImg = document.createElement('img');
         productImg.setAttribute('src', product.img);
+        productImg.addEventListener('click', openProductDetailAside)
 
         const productInfo = document.createElement('div');
         productInfo.classList.add('product-info');
@@ -152,10 +164,15 @@ function detallesDivProductos(arrayProduct){
 
         cardsContainer.appendChild(productCard);
     }
-
 }
-
 detallesDivProductos(productList);
+
+function openProductDetailAside(){
+    productDetailContainer.classList.remove('inactive');
+}
+function closeProductDetailAside(){
+    productDetailContainer.classList.add('inactive');
+}
 
 
 /* Utlizando la API de platzi
